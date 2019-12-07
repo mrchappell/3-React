@@ -14,7 +14,8 @@ function About(props) {
                 <RenderPartner partner={partner} />
             </Media>
         );
-    });
+    }
+    );
 
     return (
         <div className="container">
