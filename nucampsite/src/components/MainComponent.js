@@ -20,7 +20,7 @@ const mapStateToProps = state => {
     };
 };
 
-
+class Main extends Component {
 
     render() {
 
@@ -57,7 +57,7 @@ const mapStateToProps = state => {
                 <Footer />
             </div>
         );
-    };
+    }
 }
 
 export default withRouter(connect(mapStateToProps)(Main));
