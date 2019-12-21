@@ -1,21 +1,48 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media, } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
+function PartnerList(props) {
 
+    const partners = props.partners.partners.map(partner => {
+        return (
+            <Fade in key={partner.id}>
+                <Media tag="li">
+                <RenderPartner partner={partner} />
+            </Media>
+            </Fade>
+        );
+    }
+    );
+    if (props.partners.isLoading) {
+        return (
+            <Loading />
+        );
+    }
+    if (props.partners.errMess) {
+        return (
+            <h4>{props.partners.errMess}</h4>
+        );
+    };
+    return (
+        <div className="col mt-4">
+            <Media list>
+                <Stagger in>
+                {partners}
+                </Stagger>
+            </Media>
+        </div>
+    )
 
+}
 
 
 function About(props) {
 
-    const partners = props.partners.map(partner => {
-        return (
-            <Media tag="li" key={partner.id}>
-                <RenderPartner partner={partner} />
-            </Media>
-        );
-    }
-    );
+
 
     return (
         <div className="container">
@@ -69,11 +96,7 @@ function About(props) {
                 <div className="col-12">
                     <h3>Community Partners</h3>
                 </div>
-                <div className="col mt-4">
-                    <Media list>
-                        {partners}
-                    </Media>
-                </div>
+                <PartnerList partners={props.partners} />
             </div>
         </div>
     );
@@ -83,7 +106,7 @@ function RenderPartner({ partner }) {
     if (partner) {
         return (
             <React.Fragment>
-                <Media object width="150" src={partner.image} alt={partner.name} />
+                <Media object width="150" src={baseUrl + partner.image} alt={partner.name} />
                 <Media body className="ml-5 mb-4">
                     <Media heading> {partner.name} </Media>
                     {partner.description}
